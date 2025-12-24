@@ -1,0 +1,56 @@
+node_modules
+firebase-config-reference.md
+.DS_Store
+.vscode/
+.idea/
+dist/
+coverage/
+npm-debug.log
+yarn-error.log
+*.log
+*.swp
+*.swo
+*.bak
+
+# Environment variables
+.env
+.env.local
+*.env.local
+.env.development
+.env.production
+
+# Firebase
+*-firebase-adminsdk-*.json
+firebase-debug.log
+.firebase/
+
+# Frontend
+frontend/.env
+frontend/.env.local
+
+# Environment variables (CRITICAL - never commit these!)
+.env
+.env.local
+.env.production
+.env.env
+
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Build outputs
+frontend/build/
+frontend/dist/
+.next/
+
+# Vercel
+.vercel/
+
+*.bat
+scraper-config*
+.claude/
+CLAUDE.md
+settings.local.json
+.claude/settings.local.json
+nul
+.vsgitbuild
