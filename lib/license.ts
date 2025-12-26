@@ -3,17 +3,17 @@ import { LicenseTier, TIER_CONFIG, CURRENT_MAJOR_VERSION } from './supabase'
 
 /**
  * Generate a unique license key
- * Format: ZEN-{uuid}
+ * Format: HW-{uuid}
  */
 export function generateLicenseKey(): string {
-  return `ZEN-${randomUUID()}`
+  return `HW-${randomUUID()}`
 }
 
 /**
  * Validate license key format
  */
 export function isValidLicenseFormat(key: string): boolean {
-  const pattern = /^ZEN-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+  const pattern = /^HW-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
   return pattern.test(key)
 }
 

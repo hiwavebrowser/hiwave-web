@@ -70,7 +70,7 @@ function SuccessContent() {
             <h1 className="text-2xl font-bold text-gray-900 mb-2">Something went wrong</h1>
             <p className="text-red-600 mb-6">{error}</p>
             <a
-              href="mailto:support@zenbrowser.app"
+              href="mailto:support@HiWave.app"
               className="text-blue-600 hover:underline"
             >
               Contact Support
@@ -109,13 +109,13 @@ function SuccessContent() {
               <p className="text-amber-700">
                 We've sent a copy to <strong>{license.email}</strong>, but you should
                 save this key somewhere safe. You'll need it to activate Pro features
-                in Zen Browser.
+                in HiWave.
               </p>
             </div>
 
             <div className="mt-8 space-y-3">
               <p className="text-sm text-gray-600">
-                Enter this key in Zen Browser → Settings → License to unlock Pro features.
+                Enter this key in HiWave → Settings → License to unlock Pro features.
               </p>
               <a
                 href="/"

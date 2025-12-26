@@ -5,7 +5,7 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Zen Browser - A Calmer Way to Browse',
+  title: 'Pureflow - A Calmer Way to Browse',
   description: 'Reduce cognitive load with The Shelf, intelligent tab management, and distraction-free workspaces.',
 }
 

@@ -1,4 +1,4 @@
-# Zen Browser License Tiers
+# Pureflow License Tiers
 
 ## Tier Overview
 
@@ -38,7 +38,7 @@ User buys Believer at v1.0:
 
 Feature check:
 - Themes (introduced v2) → v2 ≤ v5 → ✅ UNLOCKED
-- Zen Sync (introduced v3) → v3 ≤ v5 → ✅ UNLOCKED
+- Pureflow Sync (introduced v3) → v3 ≤ v5 → ✅ UNLOCKED
 - Future v6 feature → v6 > v5 → 🔒 EXPIRED (upgrade needed)
 ```
 
@@ -65,10 +65,10 @@ All features through v4 are unlocked.
 
 | Product | Type | Price |
 |---------|------|-------|
-| Zen Browser Starter | Fixed | $10.00 |
-| Zen Browser Supporter | Fixed | $15.00 |
-| Zen Browser Believer | Fixed | $20.00 |
-| Zen Browser Early Adopter | Pay What You Want | Min $1.00 |
+| Pureflow Starter | Fixed | $10.00 |
+| Pureflow Supporter | Fixed | $15.00 |
+| Pureflow Believer | Fixed | $20.00 |
+| Pureflow Early Adopter | Pay What You Want | Min $1.00 |
 
 ## Current Version
 

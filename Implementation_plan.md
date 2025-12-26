@@ -1,6 +1,6 @@
-# Zen Browser Alpha Infrastructure Implementation Guide
+# HiWave Alpha Infrastructure Implementation Guide
 
-> **Goal:** Minimal viable infrastructure to support the alpha release of Zen Browser.  
+> **Goal:** Minimal viable infrastructure to support the alpha release of HiWave.  
 > **Philosophy:** Less is more. Ship fast, iterate later.  
 > **Estimated Time:** 6-8 hours across 2-3 days
 
@@ -61,7 +61,7 @@
 |----------|--------|-------|
 | Supabase project | New (separate from boop) | Clean isolation |
 | Email delivery | None for alpha | Key shown on success page |
-| License key format | `ZEN-{uuid}` | Simple, unique |
+| License key format | `HW-{uuid}` | Simple, unique |
 | Validation model | Offline default, API for upgrades | Fail-open on network errors |
 
 ---
@@ -74,7 +74,7 @@ Before starting, ensure you have access to:
 - [ ] **Vercel account** (existing from boop project)
 - [ ] **Stripe account** (create if needed: https://dashboard.stripe.com/register)
 - [ ] **Canny account** (create: https://canny.io - free tier)
-- [ ] **GitHub repo** for zen-browser-web (create if needed)
+- [ ] **GitHub repo** for HiWave-web (create if needed)
 
 ---
 
@@ -87,7 +87,7 @@ Before starting, ensure you have access to:
 1. Go to https://supabase.com/dashboard
 2. Click "New Project"
 3. Settings:
-   - **Name:** `zen-browser`
+   - **Name:** `HiWave`
    - **Database Password:** Generate and save securely
    - **Region:** Choose closest to your users (e.g., `us-east-1`)
 4. Wait for project to provision (~2 minutes)
@@ -114,7 +114,7 @@ create index licenses_key_idx on public.licenses(license_key);
 create index licenses_session_idx on public.licenses(stripe_session_id);
 
 -- Add comment for documentation
-comment on table public.licenses is 'Stores Zen Browser Pro license keys';
+comment on table public.licenses is 'Stores HiWave Pro license keys';
 ```
 
 ### Step 1.3: Get API Credentials
@@ -137,8 +137,8 @@ comment on table public.licenses is 'Stores Zen Browser Pro license keys';
 1. Go to https://dashboard.stripe.com/products
 2. Click "Add product"
 3. Settings:
-   - **Name:** `Zen Browser Pro`
-   - **Description:** `Unlock Pro features in Zen Browser`
+   - **Name:** `HiWave Pro`
+   - **Description:** `Unlock Pro features in HiWave`
    - **Pricing:** One-time, set your price (e.g., $19)
 4. Save product
 
@@ -178,8 +178,8 @@ comment on table public.licenses is 'Stores Zen Browser Pro license keys';
 
 ```bash
 # Create new repo
-mkdir zen-browser-web
-cd zen-browser-web
+mkdir HiWave-web
+cd HiWave-web
 git init
 
 # Create Next.js app
@@ -190,13 +190,13 @@ git add .
 git commit -m "Initial Next.js setup"
 
 # Push to GitHub
-gh repo create zen-browser-web --public --push
+gh repo create HiWave-web --public --push
 ```
 
 ### Step 3.2: Deploy to Vercel
 
 1. Go to https://vercel.com/new
-2. Import the `zen-browser-web` repository
+2. Import the `HiWave-web` repository
 3. Keep default settings (Next.js auto-detected)
 4. Click "Deploy"
 
@@ -217,7 +217,7 @@ gh repo create zen-browser-web --public --push
 
 1. Return to Stripe Dashboard → Webhooks
 2. Update the endpoint URL to your actual Vercel domain:
-   - `https://zen-browser-web.vercel.app/api/stripe-webhook`
+   - `https://HiWave-web.vercel.app/api/stripe-webhook`
 
 ---
 
@@ -269,11 +269,11 @@ Create `lib/license.ts`:
 import { randomUUID } from 'crypto'
 
 export function generateLicenseKey(): string {
-  return `ZEN-${randomUUID()}`
+  return `HW-${randomUUID()}`
 }
 
 export function isValidLicenseFormat(key: string): boolean {
-  const pattern = /^ZEN-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+  const pattern = /^HW-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
   return pattern.test(key)
 }
 ```
@@ -455,7 +455,7 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-8">
       <div className="max-w-2xl text-center">
-        <h1 className="text-5xl font-bold mb-4">Zen Browser</h1>
+        <h1 className="text-5xl font-bold mb-4">HiWave</h1>
         <p className="text-xl text-gray-600 mb-8">
           A calmer way to browse. Reduce cognitive load with The Shelf, 
           intelligent tab management, and distraction-free workspaces.
@@ -569,7 +569,7 @@ export default function SuccessPage() {
         {license && (
           <>
             <p className="text-gray-600 mb-6">
-              Here's your Zen Browser Pro license key. Save it somewhere safe!
+              Here's your HiWave Pro license key. Save it somewhere safe!
             </p>
             
             <div className="bg-gray-100 p-4 rounded-lg mb-4">
@@ -584,7 +584,7 @@ export default function SuccessPage() {
             </button>
             
             <p className="text-sm text-gray-500 mt-6">
-              Enter this key in Zen Browser settings to unlock Pro features.
+              Enter this key in HiWave settings to unlock Pro features.
             </p>
           </>
         )}
@@ -643,7 +643,7 @@ export default function RecoverPage() {
       <div className="max-w-md w-full">
         <h1 className="text-3xl font-bold mb-4 text-center">Recover Your License</h1>
         <p className="text-gray-600 mb-6 text-center">
-          Enter the email you used when purchasing Zen Browser Pro.
+          Enter the email you used when purchasing HiWave Pro.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -705,7 +705,7 @@ export default function RecoverPage() {
 
 1. Go to https://canny.io and create account
 2. Create a board called "Feature Requests"
-3. Copy your Canny URL (e.g., `https://zen-browser.canny.io`)
+3. Copy your Canny URL (e.g., `https://HiWave.canny.io`)
 4. Add link to your landing page and browser Help menu
 
 ### Step 6.2: GitHub Issue Templates
@@ -731,7 +731,7 @@ A clear description of the bug.
 What you expected to happen.
 
 **Environment**
-- Zen Browser version: 
+- HiWave version: 
 - Operating system: 
 - Other details: 
 
@@ -745,7 +745,7 @@ Create `.github/ISSUE_TEMPLATE/config.yml`:
 blank_issues_enabled: false
 contact_links:
   - name: 💡 Feature Request
-    url: https://zen-browser.canny.io
+    url: https://HiWave.canny.io
     about: Suggest and vote on new features
   - name: 💬 General Discussion
     url: https://github.com/your-repo/discussions
@@ -761,9 +761,9 @@ contact_links:
 ### Offline Validation (Browser-side)
 
 ```typescript
-// In Zen Browser codebase
+// In HiWave codebase
 
-const LICENSE_KEY_PATTERN = /^ZEN-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+const LICENSE_KEY_PATTERN = /^PF-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
 interface LicenseState {
   key: string | null
@@ -776,13 +776,13 @@ function validateLicenseOffline(key: string): boolean {
 }
 
 function getLicenseFromStorage(): LicenseState {
-  const stored = localStorage.getItem('zen_license')
+  const stored = localStorage.getItem('HiWave_license')
   if (!stored) return { key: null, valid: false, lastChecked: null }
   return JSON.parse(stored)
 }
 
 function saveLicenseToStorage(state: LicenseState): void {
-  localStorage.setItem('zen_license', JSON.stringify(state))
+  localStorage.setItem('HiWave_license', JSON.stringify(state))
 }
 
 function activateLicense(key: string): boolean {
@@ -802,7 +802,7 @@ function activateLicense(key: string): boolean {
 ```typescript
 async function checkLicenseOnline(key: string): Promise<{ valid: boolean; tier?: string }> {
   try {
-    const res = await fetch('https://zen-browser.vercel.app/api/validate-license', {
+    const res = await fetch('https://HiWave.vercel.app/api/validate-license', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ license_key: key })
@@ -858,7 +858,7 @@ async function checkLicenseOnline(key: string): Promise<{ valid: boolean; tier?:
 ## Reference: Project Structure
 
 ```
-zen-browser-web/
+HiWave-web/
 ├── app/
 │   ├── page.tsx                          # Landing page
 │   ├── success/

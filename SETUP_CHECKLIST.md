@@ -1,6 +1,6 @@
-# Zen Browser Alpha - Account Setup Checklist
+# HiWave Alpha - Account Setup Checklist
 
-> Track your progress setting up the infrastructure for Zen Browser.
+> Track your progress setting up the infrastructure for HiWave.
 
 ---
 
@@ -34,7 +34,7 @@
 - [x] Go to https://supabase.com/dashboard
 - [x] Click **"New Project"**
 - [x] Configure:
-  - **Name:** `zen-browser`
+  - **Name:** `HiWave`
   - **Database Password:** (saved securely)
   - **Region:** Selected
 - [x] Click **"Create new project"**
@@ -72,28 +72,28 @@ You have an existing Stripe account. Create products for each tier.
 
 **Product 1: Starter ($10 → 1 version)**
 - [ ] Click **"Add product"**
-- [ ] Name: `Zen Browser Starter`
-- [ ] Description: `Support Zen Browser development. Includes Pro features for 1 major version.`
+- [ ] Name: `HiWave Starter`
+- [ ] Description: `Support HiWave development. Includes Pro features for 1 major version.`
 - [ ] Pricing: One-time, **$10.00**
 - [ ] Save and note Product ID: 📝 `prod_________________`
 
 **Product 2: Supporter ($15 → 3 versions)**
 - [ ] Click **"Add product"**
-- [ ] Name: `Zen Browser Supporter`
-- [ ] Description: `Support Zen Browser development. Includes Pro features for 3 major versions. Best value!`
+- [ ] Name: `HiWave Supporter`
+- [ ] Description: `Support HiWave development. Includes Pro features for 3 major versions. Best value!`
 - [ ] Pricing: One-time, **$15.00**
 - [ ] Save and note Product ID: 📝 `prod_________________`
 
 **Product 3: Believer ($20 → 5 versions)**
 - [ ] Click **"Add product"**
-- [ ] Name: `Zen Browser Believer`
-- [ ] Description: `Support Zen Browser development. Includes Pro features for 5 major versions. Maximum coverage!`
+- [ ] Name: `HiWave Believer`
+- [ ] Description: `Support HiWave development. Includes Pro features for 5 major versions. Maximum coverage!`
 - [ ] Pricing: One-time, **$20.00**
 - [ ] Save and note Product ID: 📝 `prod_________________`
 
 **Product 4: Early Adopter (Pay What You Want → 4 versions)**
 - [ ] Click **"Add product"**
-- [ ] Name: `Zen Browser Early Adopter - Founder Edition`
+- [ ] Name: `HiWave Early Adopter - Founder Edition`
 - [ ] Description: `Join the first 150 Founders! Pay what you want (min $1). Includes Pro features for 4 major versions.`
 - [ ] Pricing: **Customer chooses price** (minimum $1.00)
 - [ ] Save and note Product ID: 📝 `prod_________________`
@@ -141,7 +141,7 @@ Already configured from existing Stripe account:
 | Variable | Status |
 |----------|--------|
 | `STRIPE_SECRET_KEY` | ✅ Configured in `.env.local` |
-| `STRIPE_WEBHOOK_SECRET` | ⚠️ May need new one for Zen Browser endpoint |
+| `STRIPE_WEBHOOK_SECRET` | ⚠️ May need new one for HiWave endpoint |
 
 ---
 
@@ -184,7 +184,7 @@ npm run dev
 - [ ] Commit all changes:
 ```bash
 git add .
-git commit -m "Zen Browser website with tiered licensing"
+git commit -m "HiWave website with tiered licensing"
 git push origin master
 ```
 
@@ -233,7 +233,7 @@ git push origin master
 
 - [ ] Go to https://canny.io
 - [ ] Create account (free tier)
-- [ ] Create workspace: `Zen Browser`
+- [ ] Create workspace: `HiWave`
 - [ ] Create board: **"Feature Requests"**
 
 | Your Canny URL |
