@@ -1,4 +1,4 @@
--- Pureflow License Schema
+-- HiWave License Schema
 -- Run this in Supabase SQL Editor
 
 -- Create enum for license tiers
@@ -39,7 +39,7 @@ create index licenses_session_idx on public.licenses(stripe_session_id);
 create index licenses_tier_idx on public.licenses(tier);
 
 -- Comment for documentation
-comment on table public.licenses is 'Stores Pureflow license keys with tier entitlements';
+comment on table public.licenses is 'Stores HiWave license keys with tier entitlements';
 
 -- Helper function to check Early Adopter availability
 create or replace function get_early_adopter_slots_remaining()

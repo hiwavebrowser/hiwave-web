@@ -50,7 +50,7 @@ export default function RecoverPage() {
       <div className="max-w-md w-full">
         <h1 className="text-3xl font-bold mb-4 text-center">Recover Your License</h1>
         <p className="text-gray-600 mb-8 text-center">
-          Enter the email address you used when purchasing Pureflow Pro.
+          Enter the email address you used when purchasing HiWave Pro.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4 mb-8">
