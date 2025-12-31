@@ -37,7 +37,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://github.com/petec4244/HiWave/releases/latest"
+              href="https://github.com/hiwavebrowser/hiwave-macos/releases/latest"
               className="inline-block bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors"
             >
               Download Free
@@ -487,7 +487,7 @@ export default function Home() {
           </div>
 
           <p className="text-center text-sm text-gray-500 mt-8">
-            Full roadmap available at <a href="https://getHiWave.io/roadmap" className="text-blue-600 hover:underline">getHiWave.io/roadmap</a>
+            Want to influence the roadmap? <a href="https://hiwave.canny.io" className="text-blue-600 hover:underline">Vote on features</a>
           </p>
         </div>
       </section>
@@ -503,13 +503,13 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://github.com/petec4244/HiWave/releases/latest"
+              href="https://github.com/hiwavebrowser/hiwave-macos/releases/latest"
               className="inline-block bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors"
             >
               Download for Free
             </a>
             <a
-              href="https://github.com/petec4244/HiWave"
+              href="https://github.com/hiwavebrowser"
               className="inline-block border-2 border-white/30 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white/10 transition-colors"
             >
               View Source Code
@@ -525,11 +525,10 @@ export default function Home() {
       <footer className="bg-gray-900 border-t border-gray-800">
         <div className="max-w-6xl mx-auto px-6 py-12">
           <div className="flex flex-wrap justify-center gap-8 text-sm text-gray-400 mb-8">
-            <a href="https://github.com/petec4244/HiWave" className="hover:text-white transition-colors">GitHub</a>
-            <a href="https://getHiWave.io/roadmap" className="hover:text-white transition-colors">Roadmap</a>
-            <a href="https://HiWave.canny.io" className="hover:text-white transition-colors">Feedback</a>
+            <a href="https://github.com/hiwavebrowser" className="hover:text-white transition-colors">GitHub</a>
+            <a href="https://hiwave.canny.io" className="hover:text-white transition-colors">Feedback</a>
             <a href="/recover" className="hover:text-white transition-colors">Recover License</a>
-            <a href="mailto:support@HiWave.app" className="hover:text-white transition-colors">Contact</a>
+            <a href="mailto:support@hiwavebrowser.com" className="hover:text-white transition-colors">Contact</a>
           </div>
           <p className="text-center text-sm text-gray-500 italic">
             Built independently. No ads. No tracking. No corporate agenda.
