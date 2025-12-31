@@ -1,12 +1,89 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import {
+  ThemeToggle,
+  Badge,
+  SlotsCounter,
+  ShieldIcon,
+  TabsIcon,
+  WorkspaceIcon,
+  VaultIcon,
+  FocusIcon,
+  SparkleIcon,
+  AnalyticsIcon,
+  SyncIcon,
+  DownloadIcon,
+  ImportIcon,
+  ThemeIcon,
+  ReaderIcon,
+  VideoIcon,
+  AutofillIcon,
+  GitHubIcon,
+  CheckIcon,
+  AppleIcon,
+  WindowsIcon,
+  LinuxIcon,
+} from '@/components/ui'
 
 interface EarlyAdopterSlots {
   total: number
   claimed: number
   remaining: number
   available: boolean
+}
+
+// Animation hook for scroll-triggered animations
+function useScrollAnimation() {
+  const ref = useRef<HTMLDivElement>(null)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    )
+
+    if (ref.current) {
+      observer.observe(ref.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  return { ref, isVisible }
+}
+
+// Animated section component
+function AnimatedSection({
+  children,
+  className = '',
+  delay = 0,
+}: {
+  children: React.ReactNode
+  className?: string
+  delay?: number
+}) {
+  const { ref, isVisible } = useScrollAnimation()
+
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ${className}`}
+      style={{
+        transitionDelay: `${delay}ms`,
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+      }}
+    >
+      {children}
+    </div>
+  )
 }
 
 export default function Home() {
@@ -20,522 +97,673 @@ export default function Home() {
   }, [])
 
   return (
-    <main className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-gray-900 to-gray-800 text-white">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-        <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20 text-center">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+    <main className="min-h-screen bg-[var(--hiwave-bg)] text-[var(--hiwave-text)]">
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <a href="/" className="text-xl font-bold text-white">
             HiWave
-          </h1>
-          <p className="text-2xl md:text-3xl text-gray-300 font-light mb-4">
-            A browser that gets out of your way.
-          </p>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-10">
-            Privacy-first browsing with intelligent tab management.
-            No clutter. No tracking. No distractions.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://github.com/hiwavebrowser/hiwave-macos/releases/latest"
-              className="inline-block bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors"
-            >
-              Download Free
+          </a>
+          <div className="flex items-center gap-4">
+            <a href="#features" className="text-sm text-white/70 hover:text-white transition-colors hidden sm:block">
+              Features
             </a>
-            <a
-              href="#pricing"
-              className="inline-block border-2 border-white/30 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white/10 transition-colors"
-            >
-              Support Development
+            <a href="#pricing" className="text-sm text-white/70 hover:text-white transition-colors hidden sm:block">
+              Pricing
             </a>
+            <a href="https://github.com/hiwavebrowser" className="text-white/70 hover:text-white transition-colors">
+              <GitHubIcon className="w-5 h-5" />
+            </a>
+            <ThemeToggle className="text-white/70 hover:text-white" />
           </div>
-          <p className="text-sm text-gray-500 mt-6">
-            Windows 10+ &middot; macOS 12+ &middot; Linux
-          </p>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-hero-gradient-animated text-white">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-hiwave-primary/20 rounded-full blur-3xl animate-float" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-hiwave-accent/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
+        </div>
+
+        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-24 pb-20 text-center">
+          <AnimatedSection>
+            <Badge variant="primary" className="mb-6 bg-hiwave-primary/20 text-hiwave-primary-light border border-hiwave-primary/30">
+              Now in Alpha
+            </Badge>
+          </AnimatedSection>
+
+          <AnimatedSection delay={100}>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight">
+              <span className="text-gradient">HiWave</span>
+            </h1>
+          </AnimatedSection>
+
+          <AnimatedSection delay={200}>
+            <p className="text-2xl md:text-3xl text-gray-300 font-light mb-4">
+              A browser that gets out of your way.
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection delay={300}>
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-10">
+              Privacy-first browsing with intelligent tab management.
+              No clutter. No tracking. No distractions.
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection delay={400}>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+              <a
+                href="https://github.com/hiwavebrowser/hiwave-macos/releases/latest"
+                className="btn btn-primary text-lg px-8 py-4 shadow-glow hover:shadow-glow-lg"
+              >
+                <DownloadIcon className="w-5 h-5" />
+                Download Free
+              </a>
+              <a
+                href="#pricing"
+                className="btn btn-secondary text-lg px-8 py-4 border-white/30 text-white hover:border-hiwave-primary hover:text-hiwave-primary"
+              >
+                Support Development
+              </a>
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection delay={500}>
+            <div className="flex items-center justify-center gap-6 text-gray-400">
+              <div className="flex items-center gap-2">
+                <AppleIcon className="w-5 h-5" />
+                <span className="text-sm">macOS 12+</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <WindowsIcon className="w-5 h-5" />
+                <span className="text-sm">Windows 10+</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <LinuxIcon className="w-5 h-5" />
+                <span className="text-sm">Linux</span>
+              </div>
+            </div>
+          </AnimatedSection>
+
+          {/* Browser mockup placeholder */}
+          <AnimatedSection delay={600}>
+            <div className="mt-16 max-w-4xl mx-auto">
+              <div className="relative bg-gradient-to-b from-slate-800 to-slate-900 rounded-xl border border-slate-700 shadow-2xl overflow-hidden">
+                {/* Browser chrome */}
+                <div className="flex items-center gap-2 px-4 py-3 bg-slate-900/50 border-b border-slate-700">
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                    <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                  </div>
+                  <div className="flex-1 mx-4">
+                    <div className="bg-slate-800 rounded-lg px-4 py-1.5 text-sm text-gray-400">
+                      hiwavebrowser.com
+                    </div>
+                  </div>
+                </div>
+                {/* Content placeholder */}
+                <div className="aspect-video bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 flex items-center justify-center">
+                  <div className="text-center text-gray-500">
+                    <FocusIcon className="w-16 h-16 mx-auto mb-4 text-hiwave-primary/50" />
+                    <p className="text-lg">Your calmer browsing experience</p>
+                    <p className="text-sm text-gray-600 mt-2">Screenshot coming soon</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+          <svg className="w-6 h-6 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
         </div>
       </section>
 
       {/* Problem Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-24 bg-[var(--hiwave-bg-secondary)]">
         <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-6">
-            The Problem
-          </h2>
-          <p className="text-xl text-gray-600 text-center leading-relaxed">
-            Your browser is cluttered. Hundreds of tabs you'll never revisit.
-            Bookmarks you forgot exist. Ads everywhere. Trackers following you across the web.
-          </p>
+          <AnimatedSection>
+            <div className="text-center">
+              <Badge variant="warning" className="mb-4">The Problem</Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                Your browser is working against you.
+              </h2>
+              <p className="text-xl text-[var(--hiwave-text-secondary)] leading-relaxed">
+                Hundreds of tabs you'll never revisit. Bookmarks you forgot exist.
+                Ads everywhere. Trackers following you across the web.
+                <span className="block mt-4 font-semibold text-[var(--hiwave-text)]">
+                  It's time for something different.
+                </span>
+              </p>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
       {/* Solution Section */}
-      <section className="py-20">
+      <section id="features" className="py-24">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
-            The Solution
-          </h2>
-          <p className="text-xl text-gray-600 text-center mb-16">
-            HiWave is a privacy-first browser built on one principle: <strong>less is more.</strong>
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Tabs decay naturally</h3>
-                <p className="text-gray-600">Unused tabs fade to The Shelf, keeping your workspace clean without losing anything.</p>
-              </div>
+          <AnimatedSection>
+            <div className="text-center mb-16">
+              <Badge variant="success" className="mb-4">The Solution</Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                HiWave: Less is more.
+              </h2>
+              <p className="text-xl text-[var(--hiwave-text-secondary)]">
+                A privacy-first browser built on simplicity.
+              </p>
             </div>
+          </AnimatedSection>
 
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Workspaces replace bookmarks</h3>
-                <p className="text-gray-600">Organize by context (Work, Personal, Research), not folders you'll never open.</p>
-              </div>
-            </div>
-
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Ads blocked by default</h3>
-                <p className="text-gray-600">800,000+ domains blocked out of the box. No extensions needed.</p>
-              </div>
-            </div>
-
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Your data stays yours</h3>
-                <p className="text-gray-600">No telemetry. No tracking. No account required.</p>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              {
+                icon: <TabsIcon className="w-6 h-6" />,
+                title: 'Tabs decay naturally',
+                description: 'Unused tabs fade to The Shelf, keeping your workspace clean without losing anything.',
+                color: 'from-hiwave-primary to-hiwave-accent',
+              },
+              {
+                icon: <WorkspaceIcon className="w-6 h-6" />,
+                title: 'Workspaces replace bookmarks',
+                description: "Organize by context (Work, Personal, Research), not folders you'll never open.",
+                color: 'from-purple-500 to-pink-500',
+              },
+              {
+                icon: <ShieldIcon className="w-6 h-6" />,
+                title: 'Ads blocked by default',
+                description: '800,000+ domains blocked out of the box. No extensions needed.',
+                color: 'from-red-500 to-orange-500',
+              },
+              {
+                icon: <VaultIcon className="w-6 h-6" />,
+                title: 'Your data stays yours',
+                description: 'No telemetry. No tracking. No account required.',
+                color: 'from-green-500 to-emerald-500',
+              },
+            ].map((feature, i) => (
+              <AnimatedSection key={feature.title} delay={i * 100}>
+                <div className="group p-6 rounded-xl bg-[var(--hiwave-bg)] border border-[var(--hiwave-border)] hover:border-hiwave-primary/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform`}>
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-[var(--hiwave-text-secondary)]">{feature.description}</p>
+                </div>
+              </AnimatedSection>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Free Features */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-24 bg-[var(--hiwave-bg-secondary)]">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
-            What's Free (Forever)
-          </h2>
-          <p className="text-lg text-gray-600 text-center mb-4">
-            This is a complete browser, not a trial.
-          </p>
-          <p className="text-sm text-gray-500 text-center mb-12">
-            All core features are free forever. No strings attached.
-          </p>
+          <AnimatedSection>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                What's Free <span className="text-hiwave-primary">(Forever)</span>
+              </h2>
+              <p className="text-lg text-[var(--hiwave-text-secondary)]">
+                This is a complete browser, not a trial. All core features are free forever.
+              </p>
+            </div>
+          </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-xl border border-gray-200">
-              <div className="text-2xl mb-3">🌐</div>
-              <h3 className="font-semibold text-gray-900 mb-2">Core Browsing</h3>
-              <p className="text-sm text-gray-600">Tabs, navigation, search — everything you expect from a browser.</p>
-            </div>
-            <div className="bg-white p-6 rounded-xl border border-gray-200">
-              <div className="text-2xl mb-3">📚</div>
-              <h3 className="font-semibold text-gray-900 mb-2">The Shelf</h3>
-              <p className="text-sm text-gray-600">Tabs decay over time, stay findable, never lost. Less clutter, zero guilt.</p>
-            </div>
-            <div className="bg-white p-6 rounded-xl border border-gray-200">
-              <div className="text-2xl mb-3">🗂️</div>
-              <h3 className="font-semibold text-gray-900 mb-2">Workspaces</h3>
-              <p className="text-sm text-gray-600">Context-based organization with page locking. Switch modes, not mindsets.</p>
-            </div>
-            <div className="bg-white p-6 rounded-xl border border-gray-200">
-              <div className="text-2xl mb-3">🛡️</div>
-              <h3 className="font-semibold text-gray-900 mb-2">Flow Shield</h3>
-              <p className="text-sm text-gray-600">Built-in ad and tracker blocking at Pi-hole level. Fast, private, automatic.</p>
-            </div>
-            <div className="bg-white p-6 rounded-xl border border-gray-200">
-              <div className="text-2xl mb-3">🔐</div>
-              <h3 className="font-semibold text-gray-900 mb-2">Flow Vault</h3>
-              <p className="text-sm text-gray-600">Encrypted password storage that lives locally. Your secrets, your device.</p>
-            </div>
-            <div className="bg-white p-6 rounded-xl border border-gray-200">
-              <div className="text-2xl mb-3">📥</div>
-              <h3 className="font-semibold text-gray-900 mb-2">Import Your Data</h3>
-              <p className="text-sm text-gray-600">Bring your Chrome or Firefox bookmarks, history, and passwords.</p>
-            </div>
+            {[
+              { icon: <FocusIcon />, title: 'Core Browsing', desc: 'Tabs, navigation, search — everything you expect.' },
+              { icon: <TabsIcon />, title: 'The Shelf', desc: 'Tabs decay over time, stay findable, never lost.' },
+              { icon: <WorkspaceIcon />, title: 'Workspaces', desc: 'Context-based organization with page locking.' },
+              { icon: <ShieldIcon />, title: 'Flow Shield', desc: 'Built-in ad and tracker blocking at Pi-hole level.' },
+              { icon: <VaultIcon />, title: 'Flow Vault', desc: 'Encrypted password storage that lives locally.' },
+              { icon: <ImportIcon />, title: 'Import Your Data', desc: 'Bring your Chrome or Firefox bookmarks.' },
+            ].map((feature, i) => (
+              <AnimatedSection key={feature.title} delay={i * 50}>
+                <div className="p-6 rounded-xl bg-[var(--hiwave-bg)] border border-[var(--hiwave-border)] hover:border-hiwave-primary/30 hover:shadow-md transition-all">
+                  <div className="w-10 h-10 rounded-lg bg-hiwave-primary/10 text-hiwave-primary flex items-center justify-center mb-4">
+                    {feature.icon}
+                  </div>
+                  <h3 className="font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-sm text-[var(--hiwave-text-secondary)]">{feature.desc}</p>
+                </div>
+              </AnimatedSection>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Pro Features */}
-      <section className="py-20">
+      <section className="py-24">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
-            What Your Support Unlocks
-          </h2>
-          <p className="text-lg text-gray-600 text-center mb-12">
-            One-time payment. No subscription. Features stay unlocked forever.
-          </p>
+          <AnimatedSection>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                What Your Support Unlocks
+              </h2>
+              <p className="text-lg text-[var(--hiwave-text-secondary)]">
+                One-time payment. No subscription. Features stay unlocked forever.
+              </p>
+            </div>
+          </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-gradient-to-br from-gray-900 to-gray-800 text-white p-6 rounded-xl">
-              <div className="text-2xl mb-3">🎨</div>
-              <h3 className="font-semibold mb-2">Themes</h3>
-              <p className="text-sm text-gray-300">Light mode, dark mode, custom colors. Make it yours.</p>
-            </div>
-            <div className="bg-gradient-to-br from-gray-900 to-gray-800 text-white p-6 rounded-xl">
-              <div className="text-2xl mb-3">📖</div>
-              <h3 className="font-semibold mb-2">Reader Mode</h3>
-              <p className="text-sm text-gray-300">Distraction-free article reading. Just the content.</p>
-            </div>
-            <div className="bg-gradient-to-br from-gray-900 to-gray-800 text-white p-6 rounded-xl">
-              <div className="text-2xl mb-3">📺</div>
-              <h3 className="font-semibold mb-2">Picture-in-Picture</h3>
-              <p className="text-sm text-gray-300">Floating video while you browse. Multitask effortlessly.</p>
-            </div>
-            <div className="bg-gradient-to-br from-gray-900 to-gray-800 text-white p-6 rounded-xl">
-              <div className="text-2xl mb-3">⚡</div>
-              <h3 className="font-semibold mb-2">Auto-fill</h3>
-              <p className="text-sm text-gray-300">Passwords and forms, filled securely. Save time everywhere.</p>
-            </div>
-            <div className="bg-gradient-to-br from-gray-900 to-gray-800 text-white p-6 rounded-xl">
-              <div className="text-2xl mb-3">📊</div>
-              <h3 className="font-semibold mb-2">Flow Report</h3>
-              <p className="text-sm text-gray-300">Weekly browsing wellness digest. Understand your habits.</p>
-            </div>
-            <div className="bg-gradient-to-br from-gray-900 to-gray-800 text-white p-6 rounded-xl">
-              <div className="text-2xl mb-3">☁️</div>
-              <h3 className="font-semibold mb-2">HiWave Sync</h3>
-              <p className="text-sm text-gray-300">Workspaces & vault across devices. Seamless continuity.</p>
-            </div>
+            {[
+              { icon: <ThemeIcon />, title: 'Themes', desc: 'Light mode, dark mode, custom colors. Make it yours.' },
+              { icon: <ReaderIcon />, title: 'Reader Mode', desc: 'Distraction-free article reading. Just the content.' },
+              { icon: <VideoIcon />, title: 'Picture-in-Picture', desc: 'Floating video while you browse. Multitask effortlessly.' },
+              { icon: <AutofillIcon />, title: 'Auto-fill', desc: 'Passwords and forms, filled securely. Save time everywhere.' },
+              { icon: <AnalyticsIcon />, title: 'Flow Report', desc: 'Weekly browsing wellness digest. Understand your habits.' },
+              { icon: <SyncIcon />, title: 'HiWave Sync', desc: 'Workspaces & vault across devices. Seamless continuity.' },
+            ].map((feature, i) => (
+              <AnimatedSection key={feature.title} delay={i * 50}>
+                <div className="p-6 rounded-xl bg-gradient-to-br from-hiwave-navy to-hiwave-navy-light text-white border border-slate-700 hover:border-hiwave-primary/50 hover:shadow-lg hover:shadow-hiwave-primary/10 transition-all">
+                  <div className="w-10 h-10 rounded-lg bg-white/10 text-hiwave-primary-light flex items-center justify-center mb-4">
+                    {feature.icon}
+                  </div>
+                  <h3 className="font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-sm text-gray-400">{feature.desc}</p>
+                </div>
+              </AnimatedSection>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="py-20 bg-gray-50">
+      <section id="pricing" className="py-24 bg-[var(--hiwave-bg-secondary)]">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
-            Pricing
-          </h2>
-          <p className="text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-            One-time payment, not a subscription. After your version window, existing features stay unlocked.
-            You just won't get new paid features without funding the new development.
-          </p>
+          <AnimatedSection>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Simple, Fair Pricing
+              </h2>
+              <p className="text-lg text-[var(--hiwave-text-secondary)] max-w-2xl mx-auto">
+                One-time payment, not a subscription. After your version window, existing features stay unlocked.
+              </p>
+            </div>
+          </AnimatedSection>
 
           {/* Early Adopter Banner */}
           {earlyAdopterSlots?.available && (
-            <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-6 rounded-2xl mb-8 text-center">
-              <div className="text-sm font-medium uppercase tracking-wide mb-2">Limited Time Offer</div>
-              <h3 className="text-2xl font-bold mb-2">Early Supporter Bonus</h3>
-              <p className="text-amber-100 mb-4">
-                Any payment during alpha/beta = <strong>4 major versions</strong> included!
-              </p>
-              <div className="inline-flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full">
-                <span className="font-bold">{earlyAdopterSlots.remaining}</span>
-                <span className="text-amber-100">of {earlyAdopterSlots.total} Founder spots remaining</span>
+            <AnimatedSection>
+              <div className="bg-gradient-to-r from-hiwave-primary to-hiwave-accent p-6 rounded-2xl mb-10 text-white shadow-glow">
+                <div className="max-w-3xl mx-auto text-center">
+                  <div className="inline-flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full text-sm font-medium mb-3">
+                    <SparkleIcon className="w-4 h-4" />
+                    Limited Time Offer
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2">Early Supporter Bonus</h3>
+                  <p className="text-white/80 mb-4">
+                    Any payment during alpha/beta = <strong>4 major versions</strong> included!
+                  </p>
+                  <SlotsCounter
+                    total={earlyAdopterSlots.total}
+                    remaining={earlyAdopterSlots.remaining}
+                    className="max-w-xs mx-auto"
+                  />
+                </div>
               </div>
-            </div>
+            </AnimatedSection>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Early Adopter */}
             {earlyAdopterSlots?.available && (
-              <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-6 rounded-xl border-2 border-amber-300 relative order-first md:order-none">
-                <div className="absolute -top-3 left-4 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                  FOUNDER EDITION
+              <AnimatedSection delay={0}>
+                <div className="relative p-6 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border-2 border-amber-400 h-full flex flex-col">
+                  <Badge variant="warning" className="absolute -top-3 left-4">
+                    Founder Edition
+                  </Badge>
+                  <div className="mt-4">
+                    <h3 className="text-xl font-bold mb-2">Early Adopter</h3>
+                    <div className="text-3xl font-bold mb-1">Pay What You Want</div>
+                    <div className="text-sm text-[var(--hiwave-text-muted)] mb-4">Minimum $1</div>
+                  </div>
+                  <ul className="flex-1 space-y-3 mb-6">
+                    {['4 major versions', 'Founder recognition', 'All Pro features', 'Priority support'].map(item => (
+                      <li key={item} className="flex items-center gap-2 text-sm">
+                        <CheckIcon className="w-5 h-5 text-amber-500 flex-shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <a
+                    href={process.env.NEXT_PUBLIC_STRIPE_LINK_EARLY_ADOPTER || '#'}
+                    className="btn w-full bg-amber-500 text-white hover:bg-amber-600"
+                  >
+                    Become a Founder
+                  </a>
                 </div>
-                <h3 className="text-xl font-bold mt-4 mb-2 text-gray-900">Early Adopter</h3>
-                <div className="text-3xl font-bold text-gray-900 mb-1">Pay What You Want</div>
-                <div className="text-sm text-gray-600 mb-4">Minimum $1</div>
-                <ul className="text-sm text-gray-700 space-y-2 mb-6">
-                  <li className="flex items-center gap-2">
-                    <span className="text-amber-500">✓</span> 4 major versions included
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-amber-500">✓</span> Founder recognition
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-amber-500">✓</span> All Pro features
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-amber-500">✓</span> Priority support
-                  </li>
-                </ul>
-                <a
-                  href={process.env.NEXT_PUBLIC_STRIPE_LINK_EARLY_ADOPTER || '#'}
-                  className="block w-full bg-amber-500 text-white text-center py-3 rounded-lg font-semibold hover:bg-amber-600 transition-colors"
-                >
-                  Become a Founder
-                </a>
-              </div>
+              </AnimatedSection>
             )}
 
             {/* Starter */}
-            <div className="bg-white p-6 rounded-xl border border-gray-200">
-              <h3 className="text-xl font-bold mb-2 text-gray-900">Starter</h3>
-              <div className="text-3xl font-bold text-gray-900 mb-1">$10</div>
-              <div className="text-sm text-gray-600 mb-4">One-time payment</div>
-              <ul className="text-sm text-gray-700 space-y-2 mb-6">
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> 1 major version included
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> All Pro features
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> Email support
-                </li>
-              </ul>
-              <a
-                href={process.env.NEXT_PUBLIC_STRIPE_LINK_STARTER || '#'}
-                className="block w-full bg-gray-900 text-white text-center py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors"
-              >
-                Get Starter
-              </a>
-            </div>
-
-            {/* Supporter */}
-            <div className="bg-white p-6 rounded-xl border-2 border-blue-500 relative">
-              <div className="absolute -top-3 left-4 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                BEST VALUE
+            <AnimatedSection delay={100}>
+              <div className="p-6 rounded-xl bg-[var(--hiwave-bg)] border border-[var(--hiwave-border)] h-full flex flex-col hover:border-hiwave-primary/30 transition-colors">
+                <h3 className="text-xl font-bold mb-2">Starter</h3>
+                <div className="text-3xl font-bold mb-1">$10</div>
+                <div className="text-sm text-[var(--hiwave-text-muted)] mb-4">One-time payment</div>
+                <ul className="flex-1 space-y-3 mb-6">
+                  {['1 major version', 'All Pro features', 'Email support'].map(item => (
+                    <li key={item} className="flex items-center gap-2 text-sm">
+                      <CheckIcon className="w-5 h-5 text-hiwave-primary flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={process.env.NEXT_PUBLIC_STRIPE_LINK_STARTER || '#'}
+                  className="btn btn-secondary w-full"
+                >
+                  Get Starter
+                </a>
               </div>
-              <h3 className="text-xl font-bold mt-4 mb-2 text-gray-900">Supporter</h3>
-              <div className="text-3xl font-bold text-gray-900 mb-1">$15</div>
-              <div className="text-sm text-gray-600 mb-4">One-time payment</div>
-              <ul className="text-sm text-gray-700 space-y-2 mb-6">
-                <li className="flex items-center gap-2">
-                  <span className="text-blue-500">✓</span> 3 major versions included
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-blue-500">✓</span> All Pro features
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-blue-500">✓</span> Priority support
-                </li>
-              </ul>
-              <a
-                href={process.env.NEXT_PUBLIC_STRIPE_LINK_SUPPORTER || '#'}
-                className="block w-full bg-blue-500 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
-              >
-                Get Supporter
-              </a>
-            </div>
+            </AnimatedSection>
+
+            {/* Supporter - Best Value */}
+            <AnimatedSection delay={200}>
+              <div className="relative p-6 rounded-xl bg-[var(--hiwave-bg)] border-2 border-hiwave-primary shadow-glow h-full flex flex-col">
+                <Badge variant="primary" className="absolute -top-3 left-4">
+                  Best Value
+                </Badge>
+                <div className="mt-4">
+                  <h3 className="text-xl font-bold mb-2">Supporter</h3>
+                  <div className="text-3xl font-bold mb-1">$15</div>
+                  <div className="text-sm text-[var(--hiwave-text-muted)] mb-4">One-time payment</div>
+                </div>
+                <ul className="flex-1 space-y-3 mb-6">
+                  {['3 major versions', 'All Pro features', 'Priority support'].map(item => (
+                    <li key={item} className="flex items-center gap-2 text-sm">
+                      <CheckIcon className="w-5 h-5 text-hiwave-primary flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={process.env.NEXT_PUBLIC_STRIPE_LINK_SUPPORTER || '#'}
+                  className="btn btn-primary w-full"
+                >
+                  Get Supporter
+                </a>
+              </div>
+            </AnimatedSection>
 
             {/* Believer */}
-            <div className="bg-white p-6 rounded-xl border border-gray-200">
-              <h3 className="text-xl font-bold mb-2 text-gray-900">Believer</h3>
-              <div className="text-3xl font-bold text-gray-900 mb-1">$20</div>
-              <div className="text-sm text-gray-600 mb-4">One-time payment</div>
-              <ul className="text-sm text-gray-700 space-y-2 mb-6">
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> 5 major versions included
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> All Pro features
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> Priority support
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> Feature voting access
-                </li>
-              </ul>
-              <a
-                href={process.env.NEXT_PUBLIC_STRIPE_LINK_BELIEVER || '#'}
-                className="block w-full bg-gray-900 text-white text-center py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors"
-              >
-                Get Believer
-              </a>
-            </div>
+            <AnimatedSection delay={300}>
+              <div className="p-6 rounded-xl bg-[var(--hiwave-bg)] border border-[var(--hiwave-border)] h-full flex flex-col hover:border-hiwave-primary/30 transition-colors">
+                <h3 className="text-xl font-bold mb-2">Believer</h3>
+                <div className="text-3xl font-bold mb-1">$20</div>
+                <div className="text-sm text-[var(--hiwave-text-muted)] mb-4">One-time payment</div>
+                <ul className="flex-1 space-y-3 mb-6">
+                  {['5 major versions', 'All Pro features', 'Priority support', 'Feature voting'].map(item => (
+                    <li key={item} className="flex items-center gap-2 text-sm">
+                      <CheckIcon className="w-5 h-5 text-hiwave-primary flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={process.env.NEXT_PUBLIC_STRIPE_LINK_BELIEVER || '#'}
+                  className="btn btn-secondary w-full"
+                >
+                  Get Believer
+                </a>
+              </div>
+            </AnimatedSection>
           </div>
+        </div>
+      </section>
 
-          <p className="text-center text-sm text-gray-500 mt-8">
-            A revolutionary way to pay for only what you want and keep what you love.
-          </p>
+      {/* Trust Section */}
+      <section className="py-16 border-y border-[var(--hiwave-border)]">
+        <div className="max-w-6xl mx-auto px-6">
+          <AnimatedSection>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              {[
+                { label: 'Open Source', sublabel: 'MPL-2.0 Licensed' },
+                { label: 'No Tracking', sublabel: 'Zero telemetry' },
+                { label: 'One-Time Payment', sublabel: 'No subscriptions' },
+                { label: 'Privacy First', sublabel: 'Your data, your device' },
+              ].map(item => (
+                <div key={item.label}>
+                  <div className="font-bold text-lg">{item.label}</div>
+                  <div className="text-sm text-[var(--hiwave-text-muted)]">{item.sublabel}</div>
+                </div>
+              ))}
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
       {/* Comparison Table */}
-      <section className="py-20">
+      <section className="py-24">
         <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
-            Why HiWave?
-          </h2>
+          <AnimatedSection>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              Why HiWave?
+            </h2>
+          </AnimatedSection>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="border-b-2 border-gray-200">
-                  <th className="py-4 px-4 font-semibold text-gray-900"></th>
-                  <th className="py-4 px-4 font-semibold text-gray-900 text-center">HiWave</th>
-                  <th className="py-4 px-4 font-semibold text-gray-500 text-center">Chrome</th>
-                  <th className="py-4 px-4 font-semibold text-gray-500 text-center">Firefox</th>
-                  <th className="py-4 px-4 font-semibold text-gray-500 text-center">Arc</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                <tr>
-                  <td className="py-4 px-4 text-gray-700">Tab decay</td>
-                  <td className="py-4 px-4 text-center text-green-500 font-bold">✓</td>
-                  <td className="py-4 px-4 text-center text-gray-300">—</td>
-                  <td className="py-4 px-4 text-center text-gray-300">—</td>
-                  <td className="py-4 px-4 text-center text-gray-300">—</td>
-                </tr>
-                <tr>
-                  <td className="py-4 px-4 text-gray-700">Built-in ad blocking</td>
-                  <td className="py-4 px-4 text-center text-green-500 font-bold">✓</td>
-                  <td className="py-4 px-4 text-center text-gray-300">—</td>
-                  <td className="py-4 px-4 text-center text-gray-300">—</td>
-                  <td className="py-4 px-4 text-center text-gray-300">—</td>
-                </tr>
-                <tr>
-                  <td className="py-4 px-4 text-gray-700">No account required</td>
-                  <td className="py-4 px-4 text-center text-green-500 font-bold">✓</td>
-                  <td className="py-4 px-4 text-center text-gray-300">—</td>
-                  <td className="py-4 px-4 text-center text-green-500">✓</td>
-                  <td className="py-4 px-4 text-center text-gray-300">—</td>
-                </tr>
-                <tr>
-                  <td className="py-4 px-4 text-gray-700">No telemetry</td>
-                  <td className="py-4 px-4 text-center text-green-500 font-bold">✓</td>
-                  <td className="py-4 px-4 text-center text-gray-300">—</td>
-                  <td className="py-4 px-4 text-center text-gray-300">—</td>
-                  <td className="py-4 px-4 text-center text-gray-300">—</td>
-                </tr>
-                <tr>
-                  <td className="py-4 px-4 text-gray-700">Open source</td>
-                  <td className="py-4 px-4 text-center text-green-500 font-bold">✓</td>
-                  <td className="py-4 px-4 text-center text-gray-300">—</td>
-                  <td className="py-4 px-4 text-center text-green-500">✓</td>
-                  <td className="py-4 px-4 text-center text-gray-300">—</td>
-                </tr>
-                <tr>
-                  <td className="py-4 px-4 text-gray-700">One-time payment</td>
-                  <td className="py-4 px-4 text-center text-green-500 font-bold">✓</td>
-                  <td className="py-4 px-4 text-center text-gray-300">—</td>
-                  <td className="py-4 px-4 text-center text-gray-300">—</td>
-                  <td className="py-4 px-4 text-center text-gray-300">—</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <AnimatedSection delay={100}>
+            <div className="overflow-x-auto rounded-xl border border-[var(--hiwave-border)]">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="bg-[var(--hiwave-bg-secondary)]">
+                    <th className="py-4 px-4 font-semibold"></th>
+                    <th className="py-4 px-4 font-semibold text-center text-hiwave-primary">HiWave</th>
+                    <th className="py-4 px-4 font-semibold text-center text-[var(--hiwave-text-muted)]">Chrome</th>
+                    <th className="py-4 px-4 font-semibold text-center text-[var(--hiwave-text-muted)]">Firefox</th>
+                    <th className="py-4 px-4 font-semibold text-center text-[var(--hiwave-text-muted)]">Arc</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[var(--hiwave-border)]">
+                  {[
+                    { feature: 'Tab decay', hiwave: true, chrome: false, firefox: false, arc: false },
+                    { feature: 'Built-in ad blocking', hiwave: true, chrome: false, firefox: false, arc: false },
+                    { feature: 'No account required', hiwave: true, chrome: false, firefox: true, arc: false },
+                    { feature: 'No telemetry', hiwave: true, chrome: false, firefox: false, arc: false },
+                    { feature: 'Open source', hiwave: true, chrome: false, firefox: true, arc: false },
+                    { feature: 'One-time payment', hiwave: true, chrome: false, firefox: false, arc: false },
+                  ].map(row => (
+                    <tr key={row.feature} className="hover:bg-[var(--hiwave-bg-secondary)] transition-colors">
+                      <td className="py-4 px-4">{row.feature}</td>
+                      <td className="py-4 px-4 text-center">
+                        {row.hiwave ? (
+                          <CheckIcon className="w-5 h-5 text-hiwave-primary inline" />
+                        ) : (
+                          <span className="text-[var(--hiwave-text-muted)]">—</span>
+                        )}
+                      </td>
+                      <td className="py-4 px-4 text-center">
+                        {row.chrome ? (
+                          <CheckIcon className="w-5 h-5 text-green-500 inline" />
+                        ) : (
+                          <span className="text-[var(--hiwave-text-muted)]">—</span>
+                        )}
+                      </td>
+                      <td className="py-4 px-4 text-center">
+                        {row.firefox ? (
+                          <CheckIcon className="w-5 h-5 text-green-500 inline" />
+                        ) : (
+                          <span className="text-[var(--hiwave-text-muted)]">—</span>
+                        )}
+                      </td>
+                      <td className="py-4 px-4 text-center">
+                        {row.arc ? (
+                          <CheckIcon className="w-5 h-5 text-green-500 inline" />
+                        ) : (
+                          <span className="text-[var(--hiwave-text-muted)]">—</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
       {/* Roadmap */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-24 bg-[var(--hiwave-bg-secondary)]">
         <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
-            Roadmap
-          </h2>
+          <AnimatedSection>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              Roadmap
+            </h2>
+          </AnimatedSection>
 
-          <div className="space-y-6">
-            <div className="bg-white p-6 rounded-xl border-2 border-green-500 relative">
-              <div className="absolute -top-3 left-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                CURRENT
-              </div>
-              <div className="flex flex-col md:flex-row md:items-center gap-4">
-                <div className="md:w-24 font-bold text-2xl text-gray-900">v1.0</div>
-                <div className="md:w-24 text-sm text-gray-500">Q1 2025</div>
-                <div className="flex-1 text-gray-700">
-                  Core browser, The Shelf, Workspaces, Flow Shield, Flow Vault
+          <div className="space-y-4">
+            {[
+              { version: 'v1.0', date: 'Q1 2025', features: 'Core browser, The Shelf, Workspaces, Flow Shield, Flow Vault', status: 'current' },
+              { version: 'v2.0', date: 'Q2 2025', features: 'Reader Mode, Picture-in-Picture, Auto-fill, Themes', status: 'next' },
+              { version: 'v3.0', date: 'Q4 2025', features: 'Cross-device Sync, DevTools', status: 'future' },
+              { version: 'v4.0+', date: '2026', features: 'Community-driven features', status: 'future' },
+            ].map((item, i) => (
+              <AnimatedSection key={item.version} delay={i * 100}>
+                <div className={`p-6 rounded-xl bg-[var(--hiwave-bg)] border-2 transition-all ${
+                  item.status === 'current'
+                    ? 'border-hiwave-primary shadow-glow'
+                    : 'border-[var(--hiwave-border)]'
+                }`}>
+                  <div className="flex flex-col md:flex-row md:items-center gap-4">
+                    <div className="md:w-20 font-bold text-2xl">{item.version}</div>
+                    <div className="md:w-24">
+                      {item.status === 'current' && <Badge variant="success">Current</Badge>}
+                      {item.status === 'next' && <Badge variant="primary">Next</Badge>}
+                      {item.status === 'future' && <Badge variant="secondary">{item.date}</Badge>}
+                    </div>
+                    <div className="flex-1 text-[var(--hiwave-text-secondary)]">
+                      {item.features}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl border border-gray-200">
-              <div className="flex flex-col md:flex-row md:items-center gap-4">
-                <div className="md:w-24 font-bold text-2xl text-gray-900">v2.0</div>
-                <div className="md:w-24 text-sm text-gray-500">Q2 2025</div>
-                <div className="flex-1 text-gray-700">
-                  Reader Mode, Picture-in-Picture, Auto-fill, Themes
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl border border-gray-200">
-              <div className="flex flex-col md:flex-row md:items-center gap-4">
-                <div className="md:w-24 font-bold text-2xl text-gray-900">v3.0</div>
-                <div className="md:w-24 text-sm text-gray-500">Q4 2025</div>
-                <div className="flex-1 text-gray-700">
-                  Cross-device Sync, DevTools
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl border border-gray-200">
-              <div className="flex flex-col md:flex-row md:items-center gap-4">
-                <div className="md:w-24 font-bold text-2xl text-gray-400">v4.0+</div>
-                <div className="md:w-24 text-sm text-gray-500">2026</div>
-                <div className="flex-1 text-gray-500">
-                  Community-driven features
-                </div>
-              </div>
-            </div>
+              </AnimatedSection>
+            ))}
           </div>
 
-          <p className="text-center text-sm text-gray-500 mt-8">
-            Want to influence the roadmap? <a href="https://hiwave.canny.io" className="text-blue-600 hover:underline">Vote on features</a>
-          </p>
+          <AnimatedSection delay={400}>
+            <p className="text-center text-sm text-[var(--hiwave-text-muted)] mt-8">
+              Want to influence the roadmap?{' '}
+              <a href="https://hiwave.canny.io" className="link">
+                Vote on features
+              </a>
+            </p>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Community Section */}
+      <section className="py-24">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <AnimatedSection>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Join the HiWave Community
+            </h2>
+            <p className="text-lg text-[var(--hiwave-text-secondary)] mb-10">
+              Built independently. No ads. No tracking. No corporate agenda.
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection delay={100}>
+            <div className="flex flex-wrap justify-center gap-4">
+              <a
+                href="https://github.com/hiwavebrowser"
+                className="btn btn-secondary flex items-center gap-2"
+              >
+                <GitHubIcon className="w-5 h-5" />
+                View on GitHub
+              </a>
+              <a
+                href="https://hiwave.canny.io"
+                className="btn btn-secondary flex items-center gap-2"
+              >
+                <SparkleIcon className="w-5 h-5" />
+                Vote on Features
+              </a>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 bg-gray-900 text-white">
+      <section className="py-24 bg-hero-gradient text-white">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Ready to browse differently?
-          </h2>
-          <p className="text-xl text-gray-400 mb-10">
-            Download HiWave for free and experience a calmer web.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://github.com/hiwavebrowser/hiwave-macos/releases/latest"
-              className="inline-block bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors"
-            >
-              Download for Free
-            </a>
-            <a
-              href="https://github.com/hiwavebrowser"
-              className="inline-block border-2 border-white/30 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white/10 transition-colors"
-            >
-              View Source Code
-            </a>
-          </div>
-          <p className="text-sm text-gray-500 mt-6">
-            Windows 10+ &middot; macOS 12+ &middot; Linux
-          </p>
+          <AnimatedSection>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Ready to browse differently?
+            </h2>
+            <p className="text-xl text-gray-400 mb-10">
+              Download HiWave for free and experience a calmer web.
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection delay={100}>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+              <a
+                href="https://github.com/hiwavebrowser/hiwave-macos/releases/latest"
+                className="btn btn-primary text-lg px-8 py-4 bg-white text-hiwave-navy hover:bg-gray-100"
+              >
+                <DownloadIcon className="w-5 h-5" />
+                Download for Free
+              </a>
+              <a
+                href="https://github.com/hiwavebrowser"
+                className="btn text-lg px-8 py-4 border-2 border-white/30 text-white hover:bg-white/10"
+              >
+                <GitHubIcon className="w-5 h-5" />
+                View Source Code
+              </a>
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection delay={200}>
+            <div className="flex items-center justify-center gap-6 text-gray-400">
+              <div className="flex items-center gap-2">
+                <AppleIcon className="w-5 h-5" />
+                <span className="text-sm">macOS 12+</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <WindowsIcon className="w-5 h-5" />
+                <span className="text-sm">Windows 10+</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <LinuxIcon className="w-5 h-5" />
+                <span className="text-sm">Linux</span>
+              </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 border-t border-gray-800">
+      <footer className="bg-hiwave-navy border-t border-slate-800">
         <div className="max-w-6xl mx-auto px-6 py-12">
-          <div className="flex flex-wrap justify-center gap-8 text-sm text-gray-400 mb-8">
-            <a href="https://github.com/hiwavebrowser" className="hover:text-white transition-colors">GitHub</a>
-            <a href="https://hiwave.canny.io" className="hover:text-white transition-colors">Feedback</a>
-            <a href="/recover" className="hover:text-white transition-colors">Recover License</a>
-            <a href="mailto:support@hiwavebrowser.com" className="hover:text-white transition-colors">Contact</a>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
+            <div className="text-xl font-bold text-white">HiWave</div>
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-400">
+              <a href="https://github.com/hiwavebrowser" className="hover:text-white transition-colors">GitHub</a>
+              <a href="https://hiwave.canny.io" className="hover:text-white transition-colors">Feedback</a>
+              <a href="/recover" className="hover:text-white transition-colors">Recover License</a>
+              <a href="mailto:support@hiwavebrowser.com" className="hover:text-white transition-colors">Contact</a>
+            </div>
           </div>
-          <p className="text-center text-sm text-gray-500 italic">
-            Built independently. No ads. No tracking. No corporate agenda.
-          </p>
-          <p className="text-center text-xs text-gray-600 mt-4">
-            &copy; {new Date().getFullYear()} HiWave. All rights reserved.
-          </p>
+          <div className="text-center">
+            <p className="text-sm text-gray-500 italic mb-4">
+              Built independently. No ads. No tracking. No corporate agenda.
+            </p>
+            <p className="text-xs text-gray-600">
+              &copy; {new Date().getFullYear()} HiWave. All rights reserved.
+            </p>
+          </div>
         </div>
       </footer>
     </main>

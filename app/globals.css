@@ -1,1 +1,398 @@
 @import "tailwindcss";
+
+/* ============================================
+   HiWave Design System
+   ============================================ */
+
+/* CSS Custom Properties - Light Mode (default) */
+:root {
+  /* Primary - Ocean Blue */
+  --hiwave-primary: #0ea5e9;
+  --hiwave-primary-light: #38bdf8;
+  --hiwave-primary-dark: #0284c7;
+  --hiwave-primary-rgb: 14, 165, 233;
+
+  /* Secondary - Deep Navy */
+  --hiwave-navy: #0f172a;
+  --hiwave-navy-light: #1e293b;
+
+  /* Accent - Cyan/Teal */
+  --hiwave-accent: #22d3ee;
+  --hiwave-accent-rgb: 34, 211, 238;
+
+  /* Semantic Colors */
+  --hiwave-success: #22c55e;
+  --hiwave-error: #ef4444;
+  --hiwave-warning: #f59e0b;
+
+  /* Background */
+  --hiwave-bg: #ffffff;
+  --hiwave-bg-secondary: #f8fafc;
+  --hiwave-bg-tertiary: #f1f5f9;
+
+  /* Text */
+  --hiwave-text: #0f172a;
+  --hiwave-text-secondary: #475569;
+  --hiwave-text-muted: #94a3b8;
+
+  /* Borders */
+  --hiwave-border: #e2e8f0;
+  --hiwave-border-light: #f1f5f9;
+
+  /* Shadows */
+  --hiwave-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --hiwave-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+/* CSS Custom Properties - Dark Mode */
+.dark {
+  --hiwave-bg: #0f172a;
+  --hiwave-bg-secondary: #1e293b;
+  --hiwave-bg-tertiary: #334155;
+
+  --hiwave-text: #f1f5f9;
+  --hiwave-text-secondary: #94a3b8;
+  --hiwave-text-muted: #64748b;
+
+  --hiwave-border: #334155;
+  --hiwave-border-light: #1e293b;
+
+  --hiwave-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --hiwave-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--hiwave-bg);
+  color: var(--hiwave-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ============================================
+   Animation Utilities
+   ============================================ */
+
+/* Stagger animation delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+
+/* Initial state for animated elements (hidden) */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.animate-on-scroll.visible {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .animate-on-scroll {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================================
+   Gradient Backgrounds
+   ============================================ */
+
+.bg-hero-gradient {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  background-size: 200% 200%;
+}
+
+.bg-hero-gradient-animated {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f172a 50%, #1e293b 75%, #0f172a 100%);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+.bg-glow-gradient {
+  background: linear-gradient(135deg, var(--hiwave-primary) 0%, var(--hiwave-accent) 100%);
+}
+
+/* ============================================
+   Glass Effects
+   ============================================ */
+
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .glass {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dark .glass-card {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================
+   Glow Effects
+   ============================================ */
+
+.glow {
+  box-shadow: 0 0 20px rgba(var(--hiwave-primary-rgb), 0.3);
+}
+
+.glow-lg {
+  box-shadow: 0 0 40px rgba(var(--hiwave-primary-rgb), 0.4);
+}
+
+.glow-accent {
+  box-shadow: 0 0 20px rgba(var(--hiwave-accent-rgb), 0.3);
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(var(--hiwave-primary-rgb), 0.5);
+}
+
+/* ============================================
+   Card Styles
+   ============================================ */
+
+.card {
+  background: var(--hiwave-bg);
+  border: 1px solid var(--hiwave-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--hiwave-shadow-lg);
+}
+
+.card-highlighted {
+  border-color: var(--hiwave-primary);
+  box-shadow: 0 0 0 1px var(--hiwave-primary), 0 0 20px rgba(var(--hiwave-primary-rgb), 0.2);
+}
+
+/* ============================================
+   Button Base Styles
+   ============================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--hiwave-primary);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background: var(--hiwave-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--hiwave-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(var(--hiwave-primary-rgb), 0.4);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--hiwave-text);
+  border: 2px solid var(--hiwave-border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--hiwave-primary);
+  color: var(--hiwave-primary);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--hiwave-text-secondary);
+}
+
+.btn-ghost:hover {
+  background: var(--hiwave-bg-secondary);
+  color: var(--hiwave-text);
+}
+
+/* ============================================
+   Typography Utilities
+   ============================================ */
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--hiwave-primary) 0%, var(--hiwave-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* ============================================
+   Scrollbar Styling
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--hiwave-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--hiwave-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--hiwave-text-muted);
+}
+
+/* ============================================
+   Selection Styling
+   ============================================ */
+
+::selection {
+  background: rgba(var(--hiwave-primary-rgb), 0.3);
+  color: var(--hiwave-text);
+}
+
+/* ============================================
+   Focus Styles
+   ============================================ */
+
+:focus-visible {
+  outline: 2px solid var(--hiwave-primary);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   Link Styles
+   ============================================ */
+
+.link {
+  color: var(--hiwave-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: var(--hiwave-primary-dark);
+  text-decoration: underline;
+}
+
+/* ============================================
+   Badge Styles
+   ============================================ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-primary {
+  background: rgba(var(--hiwave-primary-rgb), 0.1);
+  color: var(--hiwave-primary);
+}
+
+.badge-success {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+.badge-warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+/* ============================================
+   Animations Keyframes
+   ============================================ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
