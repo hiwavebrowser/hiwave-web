@@ -4,7 +4,6 @@ import { useEffect, useState, useRef } from 'react'
 import {
   ThemeToggle,
   Badge,
-  SlotsCounter,
   ShieldIcon,
   TabsIcon,
   WorkspaceIcon,
@@ -25,13 +24,6 @@ import {
   WindowsIcon,
   LinuxIcon,
 } from '@/components/ui'
-
-interface EarlyAdopterSlots {
-  total: number
-  claimed: number
-  remaining: number
-  available: boolean
-}
 
 // Animation hook for scroll-triggered animations
 function useScrollAnimation() {
@@ -87,15 +79,6 @@ function AnimatedSection({
 }
 
 export default function Home() {
-  const [earlyAdopterSlots, setEarlyAdopterSlots] = useState<EarlyAdopterSlots | null>(null)
-
-  useEffect(() => {
-    fetch('/api/early-adopter-slots')
-      .then(res => res.json())
-      .then(data => setEarlyAdopterSlots(data))
-      .catch(console.error)
-  }, [])
-
   return (
     <main className="min-h-screen bg-[var(--hiwave-bg)] text-[var(--hiwave-text)]">
       {/* Navigation */}
@@ -108,8 +91,8 @@ export default function Home() {
             <a href="#features" className="text-sm text-gray-300 hover:text-white transition-colors hidden sm:block">
               Features
             </a>
-            <a href="#pricing" className="text-sm text-gray-300 hover:text-white transition-colors hidden sm:block">
-              Pricing
+            <a href="#donate" className="text-sm text-gray-300 hover:text-white transition-colors hidden sm:block">
+              Donate
             </a>
             <a href="https://github.com/hiwavebrowser" className="text-gray-300 hover:text-white transition-colors">
               <GitHubIcon className="w-5 h-5" />
@@ -130,7 +113,7 @@ export default function Home() {
         <div className="relative z-10 max-w-6xl mx-auto px-6 pt-24 pb-20 text-center">
           <AnimatedSection>
             <Badge variant="primary" className="mb-6 bg-hiwave-primary/20 text-hiwave-primary-light border border-hiwave-primary/30">
-              Now in Alpha
+              Free & Open Source
             </Badge>
           </AnimatedSection>
 
@@ -149,7 +132,7 @@ export default function Home() {
           <AnimatedSection delay={300}>
             <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-10">
               Privacy-first browsing with intelligent tab management.
-              No clutter. No tracking. No distractions.
+              No clutter. No tracking. No distractions. Completely free.
             </p>
           </AnimatedSection>
 
@@ -163,10 +146,10 @@ export default function Home() {
                 Download Free
               </a>
               <a
-                href="#pricing"
+                href="#donate"
                 className="btn btn-secondary text-lg px-8 py-4 border-white/30 text-white hover:border-hiwave-primary hover:text-hiwave-primary"
               >
-                Support Development
+                Support the Project
               </a>
             </div>
           </AnimatedSection>
@@ -181,9 +164,9 @@ export default function Home() {
                 <WindowsIcon className="w-5 h-5" />
                 <span className="text-sm">Windows 10+</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 opacity-60">
                 <LinuxIcon className="w-5 h-5" />
-                <span className="text-sm">Linux</span>
+                <span className="text-sm">Linux <span className="text-xs">(Coming Soon)</span></span>
               </div>
             </div>
           </AnimatedSection>
@@ -287,16 +270,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Free Features */}
+      {/* All Features - Everything is Free */}
       <section className="py-24 bg-[var(--hiwave-bg-secondary)]">
         <div className="max-w-6xl mx-auto px-6">
           <AnimatedSection>
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                What's Free <span className="text-hiwave-primary">(Forever)</span>
+                Everything Included <span className="text-hiwave-primary">(All Free)</span>
               </h2>
               <p className="text-lg text-[var(--hiwave-text-secondary)]">
-                This is a complete browser, not a trial. All core features are free forever.
+                No premium tiers. No hidden features. HiWave is completely free, forever.
               </p>
             </div>
           </AnimatedSection>
@@ -309,6 +292,12 @@ export default function Home() {
               { icon: <ShieldIcon />, title: 'Flow Shield', desc: 'Built-in ad and tracker blocking at Pi-hole level.' },
               { icon: <VaultIcon />, title: 'Flow Vault', desc: 'Encrypted password storage that lives locally.' },
               { icon: <ImportIcon />, title: 'Import Your Data', desc: 'Bring your Chrome or Firefox bookmarks.' },
+              { icon: <ThemeIcon />, title: 'Themes', desc: 'Light mode, dark mode, custom colors. Make it yours.' },
+              { icon: <ReaderIcon />, title: 'Reader Mode', desc: 'Distraction-free article reading. Just the content.' },
+              { icon: <VideoIcon />, title: 'Picture-in-Picture', desc: 'Floating video while you browse. Multitask effortlessly.' },
+              { icon: <AutofillIcon />, title: 'Auto-fill', desc: 'Passwords and forms, filled securely. Save time everywhere.' },
+              { icon: <AnalyticsIcon />, title: 'Flow Report', desc: 'Weekly browsing wellness digest. Understand your habits.' },
+              { icon: <SyncIcon />, title: 'HiWave Sync', desc: 'Workspaces & vault across devices. Seamless continuity.' },
             ].map((feature, i) => (
               <AnimatedSection key={feature.title} delay={i * 50}>
                 <div className="p-6 rounded-xl bg-[var(--hiwave-bg)] border border-[var(--hiwave-border)] hover:border-hiwave-primary/30 hover:shadow-md transition-all">
@@ -324,185 +313,53 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pro Features */}
-      <section className="py-24">
-        <div className="max-w-6xl mx-auto px-6">
-          <AnimatedSection>
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                What Your Support Unlocks
-              </h2>
-              <p className="text-lg text-[var(--hiwave-text-secondary)]">
-                One-time payment. No subscription. Features stay unlocked forever.
-              </p>
-            </div>
-          </AnimatedSection>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { icon: <ThemeIcon />, title: 'Themes', desc: 'Light mode, dark mode, custom colors. Make it yours.' },
-              { icon: <ReaderIcon />, title: 'Reader Mode', desc: 'Distraction-free article reading. Just the content.' },
-              { icon: <VideoIcon />, title: 'Picture-in-Picture', desc: 'Floating video while you browse. Multitask effortlessly.' },
-              { icon: <AutofillIcon />, title: 'Auto-fill', desc: 'Passwords and forms, filled securely. Save time everywhere.' },
-              { icon: <AnalyticsIcon />, title: 'Flow Report', desc: 'Weekly browsing wellness digest. Understand your habits.' },
-              { icon: <SyncIcon />, title: 'HiWave Sync', desc: 'Workspaces & vault across devices. Seamless continuity.' },
-            ].map((feature, i) => (
-              <AnimatedSection key={feature.title} delay={i * 50}>
-                <div className="p-6 rounded-xl bg-gradient-to-br from-hiwave-navy to-hiwave-navy-light text-white border border-slate-700 hover:border-hiwave-primary/50 hover:shadow-lg hover:shadow-hiwave-primary/10 transition-all">
-                  <div className="w-10 h-10 rounded-lg bg-white/10 text-hiwave-primary-light flex items-center justify-center mb-4">
-                    {feature.icon}
-                  </div>
-                  <h3 className="font-semibold mb-2">{feature.title}</h3>
-                  <p className="text-sm text-gray-400">{feature.desc}</p>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section id="pricing" className="py-24 bg-[var(--hiwave-bg-secondary)]">
-        <div className="max-w-6xl mx-auto px-6">
+      {/* Donate Section */}
+      <section id="donate" className="py-24">
+        <div className="max-w-4xl mx-auto px-6">
           <AnimatedSection>
             <div className="text-center mb-12">
+              <Badge variant="primary" className="mb-4">Support HiWave</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Simple, Fair Pricing
+                Love HiWave? Consider a Donation
               </h2>
               <p className="text-lg text-[var(--hiwave-text-secondary)] max-w-2xl mx-auto">
-                One-time payment, not a subscription. After your version window, existing features stay unlocked.
+                HiWave is free and always will be. But if you find it valuable, your donation helps keep development going and ensures HiWave stays independent.
               </p>
             </div>
           </AnimatedSection>
 
-          {/* Early Adopter Banner */}
-          {earlyAdopterSlots?.available && (
-            <AnimatedSection>
-              <div className="bg-gradient-to-r from-hiwave-primary to-hiwave-accent p-6 rounded-2xl mb-10 text-white shadow-glow">
-                <div className="max-w-3xl mx-auto text-center">
-                  <div className="inline-flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full text-sm font-medium mb-3">
-                    <SparkleIcon className="w-4 h-4" />
-                    Limited Time Offer
-                  </div>
-                  <h3 className="text-2xl font-bold mb-2">Early Supporter Bonus</h3>
-                  <p className="text-white/80 mb-4">
-                    Any payment during alpha/beta = <strong>4 major versions</strong> included!
-                  </p>
-                  <SlotsCounter
-                    total={earlyAdopterSlots.total}
-                    remaining={earlyAdopterSlots.remaining}
-                    className="max-w-xs mx-auto"
-                  />
+          <AnimatedSection delay={100}>
+            <div className="relative p-8 rounded-2xl bg-gradient-to-br from-hiwave-navy to-hiwave-navy-light text-white border border-slate-700 text-center">
+              <div className="absolute inset-0 bg-gradient-to-br from-hiwave-primary/10 to-hiwave-accent/10 rounded-2xl" />
+              <div className="relative">
+                <div className="w-16 h-16 rounded-full bg-hiwave-primary/20 flex items-center justify-center mx-auto mb-6">
+                  <SparkleIcon className="w-8 h-8 text-hiwave-primary-light" />
                 </div>
-              </div>
-            </AnimatedSection>
-          )}
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Early Adopter */}
-            {earlyAdopterSlots?.available && (
-              <AnimatedSection delay={0}>
-                <div className="relative p-6 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border-2 border-amber-400 h-full flex flex-col">
-                  <Badge variant="warning" className="absolute -top-3 left-4">
-                    Founder Edition
-                  </Badge>
-                  <div className="mt-4">
-                    <h3 className="text-xl font-bold mb-2">Early Adopter</h3>
-                    <div className="text-3xl font-bold mb-1">Pay What You Want</div>
-                    <div className="text-sm text-[var(--hiwave-text-muted)] mb-4">Minimum $1</div>
-                  </div>
-                  <ul className="flex-1 space-y-3 mb-6">
-                    {['4 major versions', 'Founder recognition', 'All Pro features', 'Priority support'].map(item => (
-                      <li key={item} className="flex items-center gap-2 text-sm">
-                        <CheckIcon className="w-5 h-5 text-amber-500 flex-shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                <h3 className="text-2xl font-bold mb-3">Support Independent Development</h3>
+                <p className="text-gray-400 mb-8 max-w-lg mx-auto">
+                  Your donation goes directly towards development, server costs, and keeping HiWave ad-free and privacy-focused.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
-                    href={process.env.NEXT_PUBLIC_STRIPE_LINK_EARLY_ADOPTER || '#'}
-                    className="btn w-full bg-amber-500 text-white hover:bg-amber-600"
+                    href="https://github.com/sponsors/hiwavebrowser"
+                    className="btn btn-primary px-8 py-4 text-lg shadow-glow hover:shadow-glow-lg"
                   >
-                    Become a Founder
+                    <GitHubIcon className="w-5 h-5" />
+                    Sponsor on GitHub
+                  </a>
+                  <a
+                    href="https://ko-fi.com/hiwavebrowser"
+                    className="btn px-8 py-4 text-lg border-2 border-white/30 text-white hover:bg-white/10"
+                  >
+                    Buy Me a Coffee
                   </a>
                 </div>
-              </AnimatedSection>
-            )}
-
-            {/* Starter */}
-            <AnimatedSection delay={100}>
-              <div className="p-6 rounded-xl bg-[var(--hiwave-bg)] border border-[var(--hiwave-border)] h-full flex flex-col hover:border-hiwave-primary/30 transition-colors">
-                <h3 className="text-xl font-bold mb-2">Starter</h3>
-                <div className="text-3xl font-bold mb-1">$10</div>
-                <div className="text-sm text-[var(--hiwave-text-muted)] mb-4">One-time payment</div>
-                <ul className="flex-1 space-y-3 mb-6">
-                  {['1 major version', 'All Pro features', 'Email support'].map(item => (
-                    <li key={item} className="flex items-center gap-2 text-sm">
-                      <CheckIcon className="w-5 h-5 text-hiwave-primary flex-shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href={process.env.NEXT_PUBLIC_STRIPE_LINK_STARTER || '#'}
-                  className="btn btn-secondary w-full"
-                >
-                  Get Starter
-                </a>
+                <p className="text-sm text-gray-500 mt-6">
+                  No pressure — HiWave works the same whether you donate or not.
+                </p>
               </div>
-            </AnimatedSection>
-
-            {/* Supporter - Best Value */}
-            <AnimatedSection delay={200}>
-              <div className="relative p-6 rounded-xl bg-[var(--hiwave-bg)] border-2 border-hiwave-primary shadow-glow h-full flex flex-col">
-                <Badge variant="primary" className="absolute -top-3 left-4">
-                  Best Value
-                </Badge>
-                <div className="mt-4">
-                  <h3 className="text-xl font-bold mb-2">Supporter</h3>
-                  <div className="text-3xl font-bold mb-1">$15</div>
-                  <div className="text-sm text-[var(--hiwave-text-muted)] mb-4">One-time payment</div>
-                </div>
-                <ul className="flex-1 space-y-3 mb-6">
-                  {['3 major versions', 'All Pro features', 'Priority support'].map(item => (
-                    <li key={item} className="flex items-center gap-2 text-sm">
-                      <CheckIcon className="w-5 h-5 text-hiwave-primary flex-shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href={process.env.NEXT_PUBLIC_STRIPE_LINK_SUPPORTER || '#'}
-                  className="btn btn-primary w-full"
-                >
-                  Get Supporter
-                </a>
-              </div>
-            </AnimatedSection>
-
-            {/* Believer */}
-            <AnimatedSection delay={300}>
-              <div className="p-6 rounded-xl bg-[var(--hiwave-bg)] border border-[var(--hiwave-border)] h-full flex flex-col hover:border-hiwave-primary/30 transition-colors">
-                <h3 className="text-xl font-bold mb-2">Believer</h3>
-                <div className="text-3xl font-bold mb-1">$20</div>
-                <div className="text-sm text-[var(--hiwave-text-muted)] mb-4">One-time payment</div>
-                <ul className="flex-1 space-y-3 mb-6">
-                  {['5 major versions', 'All Pro features', 'Priority support', 'Feature voting'].map(item => (
-                    <li key={item} className="flex items-center gap-2 text-sm">
-                      <CheckIcon className="w-5 h-5 text-hiwave-primary flex-shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href={process.env.NEXT_PUBLIC_STRIPE_LINK_BELIEVER || '#'}
-                  className="btn btn-secondary w-full"
-                >
-                  Get Believer
-                </a>
-              </div>
-            </AnimatedSection>
-          </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
@@ -514,7 +371,7 @@ export default function Home() {
               {[
                 { label: 'Open Source', sublabel: 'MPL-2.0 Licensed' },
                 { label: 'No Tracking', sublabel: 'Zero telemetry' },
-                { label: 'One-Time Payment', sublabel: 'No subscriptions' },
+                { label: 'Always Free', sublabel: 'No premium tiers' },
                 { label: 'Privacy First', sublabel: 'Your data, your device' },
               ].map(item => (
                 <div key={item.label}>
@@ -555,7 +412,7 @@ export default function Home() {
                     { feature: 'No account required', hiwave: true, chrome: false, firefox: true, arc: false },
                     { feature: 'No telemetry', hiwave: true, chrome: false, firefox: false, arc: false },
                     { feature: 'Open source', hiwave: true, chrome: false, firefox: true, arc: false },
-                    { feature: 'One-time payment', hiwave: true, chrome: false, firefox: false, arc: false },
+                    { feature: 'Completely free', hiwave: true, chrome: true, firefox: true, arc: true },
                   ].map(row => (
                     <tr key={row.feature} className="hover:bg-[var(--hiwave-bg-secondary)] transition-colors">
                       <td className="py-4 px-4">{row.feature}</td>
@@ -719,9 +576,9 @@ export default function Home() {
                 <WindowsIcon className="w-5 h-5" />
                 <span className="text-sm">Windows 10+</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 opacity-60">
                 <LinuxIcon className="w-5 h-5" />
-                <span className="text-sm">Linux</span>
+                <span className="text-sm">Linux <span className="text-xs">(Coming Soon)</span></span>
               </div>
             </div>
           </AnimatedSection>
@@ -736,7 +593,7 @@ export default function Home() {
             <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-400">
               <a href="https://github.com/hiwavebrowser" className="hover:text-white transition-colors">GitHub</a>
               <a href="https://hiwave.canny.io" className="hover:text-white transition-colors">Feedback</a>
-              <a href="/recover" className="hover:text-white transition-colors">Recover License</a>
+              <a href="#donate" className="hover:text-white transition-colors">Donate</a>
               <a href="mailto:support@hiwavebrowser.com" className="hover:text-white transition-colors">Contact</a>
             </div>
           </div>
