@@ -99,22 +99,22 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[var(--hiwave-bg)] text-[var(--hiwave-text)]">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-hiwave-navy/90 backdrop-blur-md border-b border-slate-700/50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <a href="/" className="text-xl font-bold text-white">
             HiWave
           </a>
           <div className="flex items-center gap-4">
-            <a href="#features" className="text-sm text-white/70 hover:text-white transition-colors hidden sm:block">
+            <a href="#features" className="text-sm text-gray-300 hover:text-white transition-colors hidden sm:block">
               Features
             </a>
-            <a href="#pricing" className="text-sm text-white/70 hover:text-white transition-colors hidden sm:block">
+            <a href="#pricing" className="text-sm text-gray-300 hover:text-white transition-colors hidden sm:block">
               Pricing
             </a>
-            <a href="https://github.com/hiwavebrowser" className="text-white/70 hover:text-white transition-colors">
+            <a href="https://github.com/hiwavebrowser" className="text-gray-300 hover:text-white transition-colors">
               <GitHubIcon className="w-5 h-5" />
             </a>
-            <ThemeToggle className="text-white/70 hover:text-white" />
+            <ThemeToggle />
           </div>
         </div>
       </nav>
@@ -188,31 +188,15 @@ export default function Home() {
             </div>
           </AnimatedSection>
 
-          {/* Browser mockup placeholder */}
+          {/* Browser screenshot */}
           <AnimatedSection delay={600}>
             <div className="mt-16 max-w-4xl mx-auto">
-              <div className="relative bg-gradient-to-b from-slate-800 to-slate-900 rounded-xl border border-slate-700 shadow-2xl overflow-hidden">
-                {/* Browser chrome */}
-                <div className="flex items-center gap-2 px-4 py-3 bg-slate-900/50 border-b border-slate-700">
-                  <div className="flex gap-1.5">
-                    <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                    <div className="w-3 h-3 rounded-full bg-green-500/80" />
-                  </div>
-                  <div className="flex-1 mx-4">
-                    <div className="bg-slate-800 rounded-lg px-4 py-1.5 text-sm text-gray-400">
-                      hiwavebrowser.com
-                    </div>
-                  </div>
-                </div>
-                {/* Content placeholder */}
-                <div className="aspect-video bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 flex items-center justify-center">
-                  <div className="text-center text-gray-500">
-                    <FocusIcon className="w-16 h-16 mx-auto mb-4 text-hiwave-primary/50" />
-                    <p className="text-lg">Your calmer browsing experience</p>
-                    <p className="text-sm text-gray-600 mt-2">Screenshot coming soon</p>
-                  </div>
-                </div>
+              <div className="relative rounded-xl border border-slate-700 shadow-2xl overflow-hidden">
+                <img
+                  src="/screenshots/hero.png"
+                  alt="HiWave Browser - A calmer browsing experience"
+                  className="w-full h-auto"
+                />
               </div>
             </div>
           </AnimatedSection>

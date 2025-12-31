@@ -44,7 +44,7 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
   return (
     <button
       onClick={toggleTheme}
-      className={`p-2 rounded-lg transition-colors hover:bg-[var(--hiwave-bg-secondary)] ${className}`}
+      className={`p-2 rounded-lg transition-colors hover:bg-white/10 ${className}`}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       {isDark ? (
@@ -58,8 +58,8 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
           />
         </svg>
       ) : (
-        // Moon icon for light mode (click to go dark)
-        <svg className="w-5 h-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        // Moon icon for light mode (click to go dark) - using light color since nav is always dark
+        <svg className="w-5 h-5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
