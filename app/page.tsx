@@ -88,8 +88,14 @@ export default function Home() {
             HiWave
           </a>
           <div className="flex items-center gap-4">
-            <a href="#features" className="text-sm text-gray-300 hover:text-white transition-colors hidden sm:block">
+            <a href="#features" className="text-sm text-gray-300 hover:text-white transition-colors hidden md:block">
               Features
+            </a>
+            <a href="#status" className="text-sm text-gray-300 hover:text-white transition-colors hidden md:block">
+              Status
+            </a>
+            <a href="#churn" className="text-sm text-gray-300 hover:text-white transition-colors hidden lg:block">
+              Metrics
             </a>
             <a href="#donate" className="text-sm text-gray-300 hover:text-white transition-colors hidden sm:block">
               Donate
@@ -130,26 +136,29 @@ export default function Home() {
           </AnimatedSection>
 
           <AnimatedSection delay={300}>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-10">
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-4">
               Privacy-first browsing with intelligent tab management.
-              No clutter. No tracking. No distractions. Completely free.
+              Built from scratch in Rust with our own engine — RustKit.
+            </p>
+            <p className="text-base text-gray-500 max-w-2xl mx-auto mb-10">
+              No clutter. No tracking. No distractions. Completely free and open source.
             </p>
           </AnimatedSection>
 
           <AnimatedSection delay={400}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <a
-                href="https://github.com/hiwavebrowser/hiwave-macos/releases/latest"
+                href="https://github.com/hiwavebrowser/hiwave/releases/latest"
                 className="btn btn-primary text-lg px-8 py-4 shadow-glow hover:shadow-glow-lg"
               >
                 <DownloadIcon className="w-5 h-5" />
-                Download Free
+                Download Free (All Platforms)
               </a>
               <a
-                href="#donate"
-                className="btn btn-secondary text-lg px-8 py-4 border-white/30 text-white hover:border-hiwave-primary hover:text-hiwave-primary"
+                href="https://github.com/hiwavebrowser/hiwave/releases/tag/nightly"
+                className="btn btn-secondary text-lg px-8 py-4 border-white/30 text-white hover:border-white/50"
               >
-                Support the Project
+                Nightly Builds
               </a>
             </div>
           </AnimatedSection>
@@ -164,10 +173,25 @@ export default function Home() {
                 <WindowsIcon className="w-5 h-5" />
                 <span className="text-sm">Windows 10+</span>
               </div>
-              <div className="flex items-center gap-2 opacity-60">
+              <div className="flex items-center gap-2">
                 <LinuxIcon className="w-5 h-5" />
-                <span className="text-sm">Linux <span className="text-xs">(Coming Soon)</span></span>
+                <span className="text-sm">Linux (Ubuntu/Fedora/Arch)</span>
               </div>
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection delay={550}>
+            <div className="mt-8 flex justify-center">
+              <a
+                href="#status"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/30 transition-all text-sm text-gray-300 hover:text-white"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                </span>
+                View Live Development Metrics
+              </a>
             </div>
           </AnimatedSection>
 
@@ -310,6 +334,232 @@ export default function Home() {
               </AnimatedSection>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Development Status Section */}
+      <section id="status" className="py-24 border-t border-[var(--hiwave-border)]">
+        <div className="max-w-6xl mx-auto px-6">
+          <AnimatedSection>
+            <div className="text-center mb-16">
+              <Badge variant="primary" className="mb-4">Development Status</Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Built in the Open
+              </h2>
+              <p className="text-lg text-[var(--hiwave-text-secondary)]">
+                Track our progress with real-time metrics across all platforms
+              </p>
+            </div>
+          </AnimatedSection>
+
+          {/* Platform Status Grid */}
+          <AnimatedSection delay={100}>
+            <div className="mb-12">
+              <h3 className="text-2xl font-bold mb-6 text-center">Platform Status</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {[
+                  { name: 'macOS', icon: <AppleIcon className="w-6 h-6" />, platform: 'macos' },
+                  { name: 'Windows', icon: <WindowsIcon className="w-6 h-6" />, platform: 'windows' },
+                  { name: 'Linux', icon: <LinuxIcon className="w-6 h-6" />, platform: 'linux' },
+                ].map((platform, i) => (
+                  <div key={platform.name} className="p-6 rounded-xl bg-[var(--hiwave-bg)] border border-[var(--hiwave-border)]">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="text-hiwave-primary">{platform.icon}</div>
+                      <h4 className="text-xl font-bold">{platform.name}</h4>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-[var(--hiwave-text-secondary)]">Build</span>
+                        <img src={`https://raw.githubusercontent.com/hiwavebrowser/hiwave/master/badges/build-${platform.platform}.svg`} alt="Build Status" className="h-5" />
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-[var(--hiwave-text-secondary)]">Tests</span>
+                        <img src={`https://raw.githubusercontent.com/hiwavebrowser/hiwave/master/badges/tests-${platform.platform}.svg`} alt="Test Status" className="h-5" />
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-[var(--hiwave-text-secondary)]">Parity</span>
+                        <img src={`https://raw.githubusercontent.com/hiwavebrowser/hiwave/master/badges/parity-${platform.platform}.svg`} alt="Parity Score" className="h-5" />
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-[var(--hiwave-text-secondary)]">Performance</span>
+                        <img src={`https://raw.githubusercontent.com/hiwavebrowser/hiwave/master/badges/perf-${platform.platform}.svg`} alt="Performance" className="h-5" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </AnimatedSection>
+
+          {/* Overall Metrics */}
+          <AnimatedSection delay={200}>
+            <div className="mb-12">
+              <h3 className="text-2xl font-bold mb-6 text-center">Overall Progress</h3>
+              <div className="flex flex-wrap justify-center gap-4">
+                <img src="https://raw.githubusercontent.com/hiwavebrowser/hiwave/master/badges/parity-overall.svg" alt="Overall Parity" className="h-8" />
+                <img src="https://raw.githubusercontent.com/hiwavebrowser/hiwave/master/badges/tests-overall.svg" alt="Overall Tests" className="h-8" />
+                <img src="https://raw.githubusercontent.com/hiwavebrowser/hiwave/master/badges/perf-score.svg" alt="Overall Performance" className="h-8" />
+              </div>
+            </div>
+          </AnimatedSection>
+
+          {/* Trend Charts */}
+          <AnimatedSection delay={300}>
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-xl font-bold mb-4 text-center">Parity Progress Over Time</h3>
+                <div className="rounded-xl border border-[var(--hiwave-border)] overflow-hidden bg-white p-4">
+                  <img src="https://raw.githubusercontent.com/hiwavebrowser/hiwave/master/charts/parity-trend.svg" alt="Parity Trend" className="w-full" />
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold mb-4 text-center">Performance Trend</h3>
+                <div className="rounded-xl border border-[var(--hiwave-border)] overflow-hidden bg-white p-4">
+                  <img src="https://raw.githubusercontent.com/hiwavebrowser/hiwave/master/charts/perf-trend.svg" alt="Performance Trend" className="w-full" />
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold mb-4 text-center">Platform Comparison</h3>
+                <div className="rounded-xl border border-[var(--hiwave-border)] overflow-hidden bg-white p-4">
+                  <img src="https://raw.githubusercontent.com/hiwavebrowser/hiwave/master/charts/platform-comparison.svg" alt="Platform Comparison" className="w-full" />
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+
+          {/* What is Parity? */}
+          <AnimatedSection delay={400}>
+            <div className="mt-12 p-6 rounded-xl bg-[var(--hiwave-bg-secondary)] border border-[var(--hiwave-border)]">
+              <h4 className="text-lg font-bold mb-2">What is Visual Parity?</h4>
+              <p className="text-sm text-[var(--hiwave-text-secondary)] mb-4">
+                RustKit is our custom browser engine built from scratch in Rust. Visual parity testing measures how closely
+                RustKit's rendering matches Chrome 120 baselines using pixel-perfect comparison, layout rect verification,
+                and computed style matching across 23 test cases.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+                <div>
+                  <div className="font-semibold text-hiwave-primary mb-1">Pixel Diff</div>
+                  <div className="text-[var(--hiwave-text-secondary)]">Direct pixel comparison</div>
+                </div>
+                <div>
+                  <div className="font-semibold text-hiwave-primary mb-1">Layout Rects</div>
+                  <div className="text-[var(--hiwave-text-secondary)]">Element positioning</div>
+                </div>
+                <div>
+                  <div className="font-semibold text-hiwave-primary mb-1">Computed Styles</div>
+                  <div className="text-[var(--hiwave-text-secondary)]">CSS property matching</div>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Code Churn Analysis Section */}
+      <section id="churn" className="py-24 bg-[var(--hiwave-bg-secondary)]">
+        <div className="max-w-6xl mx-auto px-6">
+          <AnimatedSection>
+            <div className="text-center mb-12">
+              <Badge variant="secondary" className="mb-4">Development Insights</Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Code Churn Analysis
+              </h2>
+              <p className="text-lg text-[var(--hiwave-text-secondary)]">
+                Track codebase evolution, identify hotspots, and monitor cross-platform development patterns
+              </p>
+            </div>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <AnimatedSection delay={100}>
+              <div className="p-6 rounded-xl bg-[var(--hiwave-bg)] border border-[var(--hiwave-border)] hover:border-hiwave-primary/30 transition-all">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white mb-4">
+                  <AnalyticsIcon className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Interactive Dashboard</h3>
+                <p className="text-[var(--hiwave-text-secondary)] mb-4">
+                  Visualize file modification frequency, line range hotspots, and areas of active development across
+                  all platforms with our interactive churn analysis dashboard.
+                </p>
+                <a
+                  href="https://raw.githubusercontent.com/hiwavebrowser/hiwave/master/churn-reports/dashboard.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-hiwave-primary hover:underline inline-flex items-center gap-2"
+                >
+                  View Dashboard
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection delay={200}>
+              <div className="p-6 rounded-xl bg-[var(--hiwave-bg)] border border-[var(--hiwave-border)] hover:border-hiwave-primary/30 transition-all">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white mb-4">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Detailed Reports</h3>
+                <p className="text-[var(--hiwave-text-secondary)] mb-4">
+                  Access comprehensive markdown reports with statistics on code changes, churn patterns, and
+                  development velocity across the entire HiWave project.
+                </p>
+                <a
+                  href="https://github.com/hiwavebrowser/hiwave/blob/master/churn-reports/report.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-hiwave-primary hover:underline inline-flex items-center gap-2"
+                >
+                  View Report
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              </div>
+            </AnimatedSection>
+          </div>
+
+          <AnimatedSection delay={300}>
+            <div className="p-6 rounded-xl bg-gradient-to-br from-hiwave-navy to-hiwave-navy-light text-white border border-slate-700">
+              <h4 className="text-lg font-bold mb-3">What Can You Learn?</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                <div className="flex items-start gap-3">
+                  <CheckIcon className="w-5 h-5 text-hiwave-primary-light mt-0.5 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold mb-1">Modification Hotspots</div>
+                    <div className="text-gray-400">Files that change most frequently</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckIcon className="w-5 h-5 text-hiwave-primary-light mt-0.5 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold mb-1">Development Patterns</div>
+                    <div className="text-gray-400">Cross-platform synchronization trends</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckIcon className="w-5 h-5 text-hiwave-primary-light mt-0.5 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold mb-1">Active Areas</div>
+                    <div className="text-gray-400">Where development is happening now</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckIcon className="w-5 h-5 text-hiwave-primary-light mt-0.5 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold mb-1">File Evolution</div>
+                    <div className="text-gray-400">How the codebase changes over time</div>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-slate-600 text-xs text-gray-400">
+                Updated weekly via GitHub Actions
+              </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
@@ -550,11 +800,18 @@ export default function Home() {
           <AnimatedSection delay={100}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <a
-                href="https://github.com/hiwavebrowser/hiwave-macos/releases/latest"
+                href="https://github.com/hiwavebrowser/hiwave/releases/latest"
                 className="btn btn-primary text-lg px-8 py-4 bg-white text-hiwave-navy hover:bg-gray-100"
               >
                 <DownloadIcon className="w-5 h-5" />
                 Download for Free
+              </a>
+              <a
+                href="https://github.com/hiwavebrowser/hiwave/releases/tag/nightly"
+                className="btn text-lg px-8 py-4 border-2 border-white/30 text-white hover:bg-white/10"
+              >
+                <DownloadIcon className="w-5 h-5" />
+                Nightly Builds
               </a>
               <a
                 href="https://github.com/hiwavebrowser"
@@ -576,9 +833,9 @@ export default function Home() {
                 <WindowsIcon className="w-5 h-5" />
                 <span className="text-sm">Windows 10+</span>
               </div>
-              <div className="flex items-center gap-2 opacity-60">
+              <div className="flex items-center gap-2">
                 <LinuxIcon className="w-5 h-5" />
-                <span className="text-sm">Linux <span className="text-xs">(Coming Soon)</span></span>
+                <span className="text-sm">Linux (Ubuntu/Fedora/Arch)</span>
               </div>
             </div>
           </AnimatedSection>
